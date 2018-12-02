@@ -1,0 +1,12 @@
+<input type="text" #newBookTitle>
+<h3>Detail:</h3>
+{{ (bookDetail | async)?.name }}
+<button (click)="add(newBookTitle)">Add</button>
+<p>{{ newBook }}</p>
+<div *ngFor="let book of books | async">
+  <input type="checkbox" [(ngModel)]="book.read" (change)="update(book)"> Is Read
+  <h3> {{ book.name }}</h3>
+  {{book | json}}
+  <button (click)="get(book)">Get</button>
+  <button (click)="remove(book)">Remove</button>
+</div>
