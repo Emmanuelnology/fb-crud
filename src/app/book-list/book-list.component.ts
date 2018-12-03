@@ -7,9 +7,12 @@ import { BookService , IBook, IBookID} from '../book.service'
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.css']
 })
+
 export class BookListComponent implements OnInit {
   books: Observable<IBookID[]>;
   bookDetail: Observable<IBook>;
+  addButtonDisabled = false;
+
   constructor(private bookService: BookService) {
     this.books = this.bookService.books;
   }
@@ -36,8 +39,11 @@ export class BookListComponent implements OnInit {
       read: false
     };
 
+    this.addButtonDisabled = true;
+
     this.bookService.add(book)
     .then( () => {
+      this.addButtonDisabled=false;
       bookElement.value = '' ;
     })
     .catch( this.handleError )

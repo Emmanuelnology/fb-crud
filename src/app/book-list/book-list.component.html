@@ -1,18 +1,19 @@
 <fieldset name="addBook">
-<input type="text" #newBookTitle>
-<button (click)="add(newBookTitle)">Add</button>
+<input [disabled]="addButtonDisabled" type="text" #newBookTitle>
+<button [disabled]="addButtonDisabled" (click)="add(newBookTitle)">Add</button>
 </fieldset>
 
 <fieldset name="bookList">
-  <div *ngFor="let book of books | async">
+  <div class ="book" *ngFor="let book of books | async">
     <label for="book-{{ book.id }}">
       <input id="book-{{ book.id }}" type="checkbox" [(ngModel)]="book.read" (change)="update(book)">
       {{ book.name }}
     </label>
-    {{book | json}}
-    <button (click)="sync(book)">Sync</button>
-    <button (click)="get(book)">Get</button>
-    <button (click)="remove(book)">Remove</button>
+    
+    <button (click)="sync(book)"><i class="fas fa-sync"></i></button>
+    <button (click)="get(book)"><i class="fas fa-download"></i></button>
+    <button (click)="remove(book)"><i class="fas fa-times"></i></button>
+    <p>{{book | json}}</p>
   </div>
 </fieldset>
 {{ (bookDetail | async)?.name }}

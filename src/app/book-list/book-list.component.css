@@ -1,3 +1,16 @@
-input, button {
+input {
   padding:5px;
+}
+
+.book {
+  border: 1px solid grey;
+  border-radius:8px;
+  margin-bottom:5px;
+  padding:10px;
+}
+
+.book button {
+  float:right;
+  border-radius:5px;
+  padding:10px;
 }
