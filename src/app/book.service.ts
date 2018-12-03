@@ -17,10 +17,20 @@ export class BookService {
     return this.bookCollection.add(book);
   }
 
-  get(bookID: string) {
+  sync(bookID: string) {
     let book: AngularFirestoreDocument<IBook>;
     book = this.bookCollection.doc<IBook>(bookID);
     return book.valueChanges();
+  }
+
+  get(bookID: string) {
+    let book: AngularFirestoreDocument<IBook>;
+    book = this.bookCollection.doc<IBook>(bookID);
+    return book.get().pipe(
+      map((snapshot) =>  {
+         return {id: bookID, ...snapshot.data()}
+        })
+      );
   }
 
   update(book: IBookID) {
@@ -31,7 +41,7 @@ export class BookService {
     this.bookCollection.doc(book.id).delete();
   }
 
-  includeID(actions) {
+  includeCollectionID(actions) {
     return actions.map((a) => {
       const data = a.payload.doc.data();
       const id = a.payload.doc.id;
@@ -41,6 +51,6 @@ export class BookService {
 
   constructor(private afs: AngularFirestore) {
     this.bookCollection = this.afs.collection<IBook>('books');
-    this.books = this.bookCollection.snapshotChanges().pipe(map(this.includeID));
+    this.books = this.bookCollection.snapshotChanges().pipe(map(this.includeCollectionID));
    }
 }

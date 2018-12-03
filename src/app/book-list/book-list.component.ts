@@ -18,8 +18,16 @@ export class BookListComponent implements OnInit {
     console.log(error);
   }
 
+  sync(book: IBookID) {
+    this.bookDetail = this.bookService.sync(book.id);
+  }
+
   get(book: IBookID) {
-    this.bookDetail = this.bookService.get(book.id);
+    this.bookService.get(book.id).subscribe(
+      (data) => {
+        console.log(data);
+      }
+    );
   }
 
   add(bookElement: HTMLInputElement) {
